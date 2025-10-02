@@ -41,8 +41,8 @@
 (set-frame-parameter nil 'alpha-background 85) ; For current frame
  (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 
-(setq doom-font (font-spec :family "Maple Mono NF" :size 15 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Ubuntu Sans" :size 16))
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 18 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Ubuntu Sans" :size 19))
 ;;
 
 (after! org
@@ -67,9 +67,21 @@
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
 (custom-set-faces!
-  '(font-lock-comment-face :slant italic)
-  '(font-lock-keyword-face :slant italic))
+  '(font-lock-comment-face :slant italic :family "Cascadia Code")
+  '(font-lock-keyword-face :slant italic :family "Cascadia Code"))
 ;; ORG-MODE THEMING
+;;    (add-hook 'zen-mode-hook (lambda ()
+;;                               (display-line-numbers-mode -1)))
+
+(after! writeroom-mode
+  ;; Disable line numbers and relative line numbers in writeroom (Zen) mode
+  (add-hook 'writeroom-mode-enable-hook (lambda ()
+                                          (setq display-line-numbers nil)))
+
+  ;; Optional: restore line numbers when leaving Zen mode
+  (add-hook 'writeroom-mode-disable-hook (lambda ()
+                                           (setq display-line-numbers t))))
+
 
 ;; quote block configs
 (custom-set-faces!
