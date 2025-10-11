@@ -33,6 +33,8 @@
 
 (package! org-special-block-extras)
 (package! ob-mermaid)
+(package! org-modern-indent
+          :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 
 (package! ht)
 (package! gptel)

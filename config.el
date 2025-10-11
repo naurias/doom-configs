@@ -1,23 +1,48 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; ------------------ FONTS --------------------- ;;
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 18)
+      doom-variable-pitch-font (font-spec :family "Ubuntu Sans" :size 19))
+
+(custom-set-faces!
+  '(font-lock-comment-face :slant italic :family "Cascadia Code")
+  '(font-lock-keyword-face :slant italic :family "Cascadia Code"))
 
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;org super tag 
+;; ------------------ GENERAL CONFIGURATIONS --------------------- ;;
+
+;; Frame Opacity / Transparency
+(set-frame-parameter nil 'alpha-background 85) ; For current frame
+ (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
+
+;; Zen Mode
+(after! writeroom-mode
+  ;; Disable line numbers and relative line numbers in writeroom (Zen) mode
+  (add-hook 'writeroom-mode-enable-hook (lambda ()
+                                          (setq display-line-numbers nil)))
+
+  ;; Optional: restore line numbers when leaving Zen mode
+  (add-hook 'writeroom-mode-disable-hook (lambda ()
+                                           (setq display-line-numbers t))))
+
+
+;; ------------------ THEMING --------------------- ;;
+
+(setq doom-theme 'doom-rose-pine)
+(after! doom-themes
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t))
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -38,12 +63,10 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(set-frame-parameter nil 'alpha-background 85) ; For current frame
- (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
 
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 18 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Ubuntu Sans" :size 19))
 ;;
+
+
 
 (after! org
   (org-babel-do-load-languages
@@ -51,6 +74,8 @@
    '((mermaid . t)
      ;; Add more languages here
      )))
+
+
 
 
 
@@ -62,49 +87,56 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox)
-(after! doom-themes
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t))
-(custom-set-faces!
-  '(font-lock-comment-face :slant italic :family "Cascadia Code")
-  '(font-lock-keyword-face :slant italic :family "Cascadia Code"))
 ;; ORG-MODE THEMING
 ;;    (add-hook 'zen-mode-hook (lambda ()
 ;;                               (display-line-numbers-mode -1)))
 
-(after! writeroom-mode
-  ;; Disable line numbers and relative line numbers in writeroom (Zen) mode
-  (add-hook 'writeroom-mode-enable-hook (lambda ()
-                                          (setq display-line-numbers nil)))
-
-  ;; Optional: restore line numbers when leaving Zen mode
-  (add-hook 'writeroom-mode-disable-hook (lambda ()
-                                           (setq display-line-numbers t))))
-
 
 ;; quote block configs
 (custom-set-faces!
-  '(org-quote :extend t)
-  '(org-block-begin-line :foreground "#67a162"))
+  '(org-quote :extend t :slant italic :family "Cascadia Code")
+  '(org-block-begin-line :height 1.2 :foreground "#67a162" ))
 ;; Custom block
 
-(defface org-block-box-face
-  '((t (:background "#233c42" :foreground "#d65d0e" :extend t :slant italic)))
-  "Face for my custom org block 'box'.")
-(defun my/org-fontify-box-blocks (limit)
-  "Fontify #+begin_box blocks with `org-block-box-face`."
-  (let ((case-fold-search t))
-    (when (re-search-forward "^[ \t]*#\\+begin_box\\(\\(?:.\\|\n\\)*?\\)#\\+end_box" limit t)
-      (add-text-properties
-       (match-beginning 0) (match-end 0)
-       '(font-lock-face org-block-box-face
-                        rear-nonsticky t))
-      t)))
-(add-hook 'org-mode-hook
-          (lambda ()
-            (font-lock-add-keywords nil
-             '((my/org-fontify-box-blocks)))))
+;;(use-package! org-modern
+;;  :after org
+;;  :config
+;;  ;; Replace #+begin_quote / #+end_quote with ❝ and ❞
+;;
+;;  ;; Keep your existing face tweaks
+;;  (custom-set-faces!
+;;    '(org-quote :extend t)
+;;    '(org-block-begin-line :foreground "#67a162"))
+;;
+;;  (global-org-modern-mode))
+;;
+;;
+;;(setq org-modern-block-name
+;;      '(("note" . "❝")
+;;        ("note_end" . "")))
+
+
+
+;;(defface org-block-box-face
+;;  '((t (:background "#233c42" :foreground "#d65d0e" :extend t :slant italic)))
+;;  "Face for my custom org block 'box'.")
+;;(defun my/org-fontify-box-blocks (limit)
+;;  "Fontify #+begin_box blocks with `org-block-box-face`."
+;;  (let ((case-fold-search t))
+;;    (when (re-search-forward "^[ \t]*#\\+begin_box\\(\\(?:.\\|\n\\)*?\\)#\\+end_box" limit t)
+;;      (add-text-properties
+;;       (match-beginning 0) (match-end 0)
+;;       '(font-lock-face org-block-box-face
+;;                        rear-nonsticky t))
+;;      t)))
+;;(add-hook 'org-mode-hook
+;;          (lambda ()
+;;            (font-lock-add-keywords nil
+;;             '((my/org-fontify-box-blocks)))))
+
+
+
+
 
 
 ;; org-roam directories
@@ -244,17 +276,17 @@
 ;;
 
 
-;; PDF GRUVBOX THEME 
+;; Latex Rosepine THEME 
 
 (after! ox-latex
-  ;; Always load Gruvbox theme
-  (add-to-list 'org-latex-packages-alist '("" "gruvbox"))
+  ;; Always load Rosé Pine theme
+  (add-to-list 'org-latex-packages-alist '("" "rosepine"))
 
-  ;; Define Gruvbox LaTeX class with heading colors
+  ;; Define Rosé Pine LaTeX class with heading colors
   (add-to-list 'org-latex-classes
-               '("gruvbox-article"
+               '("rosepine-article"
                  "\\documentclass[11pt]{article}
-\\usepackage{gruvbox}"
+\\usepackage{rosepine}"
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -262,7 +294,7 @@
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
   ;; Default export class
-  (setq org-latex-default-class "gruvbox-article"))
+  (setq org-latex-default-class "rosepine-article"))
 
 
 ;; HTML THEMING 
@@ -271,9 +303,8 @@
   (setq org-html-head
         (concat
          "<link rel=\"stylesheet\" type=\"text/css\" href=\"file://"
-         (expand-file-name "~/.config/doom/gruvbox.css")
+         (expand-file-name "~/.config/doom/rosepine.css")
          "\" />")))
-
 
 ;;   (after! PACKAGE
 ;;     (setq x y))

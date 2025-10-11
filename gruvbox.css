@@ -94,6 +94,17 @@ div.note {
   margin: 1em 0;
   background: #32302f;
 }
+
+div.note::before {
+  content: "Note";
+  font-weight: bold;
+  color: #83a598;
+  display: block;
+  margin-bottom: 0.25em;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+}
+
 div.warning {
   border-left: 4px solid #fb4934;
   padding: 0.5em 1em;
