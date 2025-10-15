@@ -95,7 +95,7 @@
 ;; quote block configs
 (custom-set-faces!
   '(org-quote :extend t :slant italic :family "Cascadia Code")
-  '(org-block-begin-line :height 1.2))
+  )
 ;; Custom block
 
 ;;(use-package! org-modern
