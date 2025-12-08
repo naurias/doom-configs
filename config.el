@@ -12,8 +12,8 @@
 ;; ------------------ GENERAL CONFIGURATIONS --------------------- ;;
 
 ;; Frame Opacity / Transparency
-(set-frame-parameter nil 'alpha-background 85) ; For current frame
- (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
+(set-frame-parameter nil 'alpha-background 90) ; For current frame
+ (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 
 ;; Zen Mode
 (after! writeroom-mode
@@ -46,19 +46,6 @@
 
 
 
-(after! gptel
-  (require 'org-supertag))
-
-(use-package! org-supertag
-  :after org
-  :config
-  ;; Common org-mode directory locations
-  (setq org-supertag-sync-directories 
-        '("~/Documents/org/supertag/"))                    ; Main org directory
-  
-  (setq org-supertag-bridge-enable-ai nil)
-  ;; Your keybindings here...
-  )
 
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:

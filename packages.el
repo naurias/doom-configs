@@ -32,14 +32,12 @@
 ;; (package! builtin-package-2 :recipe (:repo "myfork/package"))
 
 (package! org-special-block-extras)
+(package! apheleia)
 (package! ob-mermaid)
 (package! org-modern-indent
           :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 
 (package! ht)
-(package! gptel)
- (package! org-supertag
-   :recipe (:host github :repo "yibie/org-supertag"))
 
 ;; Specify a `:branch' to install a package from a particular branch or tag.
 ;; This is required for some packages whose default branch isn't 'master' (which
